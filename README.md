@@ -43,8 +43,8 @@ The app contains three tabs:
 
 
 
-![](Images/1.png)
+![](Data/tab1.png)
 
-![](Images/2.png)
+![](Data/tab2.png)
 
-![](Images/3.png)
+![](Data/tab3.png)
