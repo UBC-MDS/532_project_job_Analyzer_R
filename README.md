@@ -38,6 +38,7 @@ The app contains three tabs:
 - The second tab contains a plot showing the trend of total count for a particular job for both sexes. The job can be selected from the dropdown menu. The dropdown menu contains different jobs to be selected from.
 
 - The last tab contains a bar plot to show the change in the labour force gender gap over time. It has an interactive tooltip that shows the actual percentage of the selected year and gender.
+Simar
 
 
 
