@@ -1,16 +1,13 @@
 library(dash)
 library(dashCoreComponents)
 library(dashHtmlComponents)
-library(dashTable)
-library(tidyverse)
 library(plotly)
-library(gapminder)
-library(readr)
+
 
 
 app <- Dash$new(external_stylesheets = "https://codepen.io/chriddyp/pen/bWLwgP.css")
 
-df <- read_csv("Data/test.csv")
+df <- read_csv("https://raw.githubusercontent.com/UBC-MDS/532_project_job_Analyzer_R/master/Data/test.csv")
 
 # heatmap
 make_heatmap <- function(){
