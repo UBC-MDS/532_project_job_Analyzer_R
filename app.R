@@ -5,10 +5,12 @@ library(dashTable)
 library(tidyverse)
 library(plotly)
 library(gapminder)
+library(readr)
+
 
 app <- Dash$new(external_stylesheets = "https://codepen.io/chriddyp/pen/bWLwgP.css")
 
-df <- read_csv("test.csv")
+df <- read_csv("Data/test.csv")
 
 # heatmap
 make_heatmap <- function(){
@@ -18,7 +20,7 @@ make_heatmap <- function(){
                         'Clerical Worker', 'Carpenter')) %>%
         mutate(year = factor(year)) %>%
         group_by(job, year) %>%
-        summarise(total = sum(count))
+        summarise(total = sum(count)/1000)
 
     plot <- newdf %>%
         ggplot(aes(x = year, y = job)) +
@@ -29,7 +31,8 @@ make_heatmap <- function(){
         theme_bw() +
         scale_x_discrete(expand = expand_scale(mult = c(0, 0.01))) +
         scale_y_discrete(expand = expand_scale(mult = c(0, 0.05))) +
-        ggtitle("Total employment over the years")
+        ggtitle("Total employment over the years")+
+        labs(fill = "Total Counts (Thousands)")
     
     ggplotly(plot)
 }
@@ -93,14 +96,17 @@ make_bar <- function(){
 bar_graph <- dccGraph(
     id = 'ratio-graph',
     figure = make_bar()
+    
 )
 
 
 
 app$layout(htmlDiv(list(
-  htmlH1('JOB ANALYZER'),
+  htmlH1('JOB ANALYZER', style = list('margin-left' =  '40%', 'margin-right' = '5%')),
+  htmlIframe(height=10, width=10, style=list(borderWidth = 0)),
   htmlH3('This is an interactive dashboard analyzing the job market and comparing the changes between the two genders; males and females. 
-  This app used vega job dataset. From 1850 till 2000 the data was collected for each decade (Except for 1890-1990).'),
+  This app used vega job dataset. From 1850 till 2000 the data was collected for each decade (Except for 1890-1990).', style = list("backgroundColor" = "#e1edfa", 'margin-left' =  '5%', 'margin-right' = '5%')),
+  htmlIframe(height=15, width=10, style=list(borderWidth = 0)),
   dccTabs(id="tabs-example", value='tab-1', children=list(
     dccTab(label='Job Count', value='tab-1'),
     dccTab(label='Job Trend', value='tab-2'),
@@ -118,25 +124,28 @@ app$callback(
         htmlH5('This is a heatmap showing the change of the employment total count over the years. 
         Interact with this map by hovering over a point to get more details. 
         A comparison between men and women is possible by dragging over a region on the heatmap shown in the bar chart. 
-        Only 10 jobs out of the 250 jobs that are in the dataset are selected for the purpose of the comparison.'),
-        htmlDiv(heatmap_graph)
+        Only 10 jobs out of the 250 jobs that are in the dataset are selected for the purpose of the comparison.', style = list("backgroundColor" = "#e3d2f7", 'margin-left' =  '10%', 'margin-right' = '10%')),
+        htmlIframe(height=20, width=50, style=list(borderWidth = 0)),
+        htmlDiv(heatmap_graph, style = list('margin-left' =  '10%', 'margin-right' = '10%'))
              
       ))) 
     }  
     else if(tab == 'tab-2'){
       return(htmlDiv(list(
         htmlH5('This is a graph showing the trend of total count for a particular job for both sexes. 
-        Interact with this graph by selecting a specific job from the 10 jobs in the dropdown menu.'),
-        htmlDiv(jobsdropdown),
-        htmlDiv(line_graph) 
+        Interact with this graph by selecting a specific job from the 10 jobs in the dropdown menu.', style = list("backgroundColor" = "#e6f4fa", 'margin-left' =  '10%', 'margin-right' = '10%')),
+        htmlIframe(height=20, width=10, style=list(borderWidth = 0)),
+        htmlDiv(jobsdropdown, style = list('margin-left' =  '10%', 'margin-right' =  '60%')),
+        htmlDiv(line_graph, style = list('margin-left' =  '10%', 'margin-right' = '10%')) 
   
       )))
     }
         else if(tab == 'tab-3'){
       return(htmlDiv(list(
         htmlH5('This is a graph showing the change in the labour force gender gap over time for all the jobs in the jobs dataset. 
-        Interact with this graph by hovering over a bar to get the details of the actual percentage of the selected year and gender.'),
-        htmlDiv(bar_graph)
+        Interact with this graph by hovering over a bar to get the details of the actual percentage of the selected year and gender.', style = list("backgroundColor" = "#fae9e1", 'margin-left' =  '10%', 'margin-right' = '10%')),
+        htmlIframe(height=20, width=10, style=list(borderWidth = 0)),
+        htmlDiv(bar_graph, style = list('margin-left' =  '10%', 'margin-right' = '10%'))
       )))
     }
   }
