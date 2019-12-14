@@ -1,16 +1,13 @@
 library(dash)
 library(dashCoreComponents)
 library(dashHtmlComponents)
-library(dashTable)
-library(tidyverse)
 library(plotly)
-library(gapminder)
 library(readr)
 
 
 app <- Dash$new(external_stylesheets = "https://codepen.io/chriddyp/pen/bWLwgP.css")
 
-df <- read_csv("Data/test.csv")
+df <- read_csv("https://raw.githubusercontent.com/UBC-MDS/532_project_job_Analyzer_R/master/Data/test.csv")
 
 # heatmap
 make_heatmap <- function(){
@@ -104,7 +101,7 @@ bar_graph <- dccGraph(
 app$layout(htmlDiv(list(
   htmlH1('JOB ANALYZER', style = list('margin-left' =  '40%', 'margin-right' = '5%')),
   htmlIframe(height=10, width=10, style=list(borderWidth = 0)),
-  htmlH3('This is an interactive dashboard analyzing the job market and comparing the changes between the two genders; males and females. 
+  htmlH4('This is an interactive dashboard analyzing the job market and comparing the changes between the two genders; males and females. 
   This app used vega job dataset. From 1850 till 2000 the data was collected for each decade (Except for 1890-1990).', style = list("backgroundColor" = "#e1edfa", 'margin-left' =  '5%', 'margin-right' = '5%')),
   htmlIframe(height=15, width=10, style=list(borderWidth = 0)),
   dccTabs(id="tabs-example", value='tab-1', children=list(
@@ -122,8 +119,7 @@ app$callback(
     if(tab == 'tab-1'){
       return(htmlDiv(list(
         htmlH5('This is a heatmap showing the change of the employment total count over the years. 
-        Interact with this map by hovering over a point to get more details. 
-        A comparison between men and women is possible by dragging over a region on the heatmap shown in the bar chart. 
+        Interact with this map by hovering over a point to get more details.
         Only 10 jobs out of the 250 jobs that are in the dataset are selected for the purpose of the comparison.', style = list("backgroundColor" = "#e3d2f7", 'margin-left' =  '10%', 'margin-right' = '10%')),
         htmlIframe(height=20, width=50, style=list(borderWidth = 0)),
         htmlDiv(heatmap_graph, style = list('margin-left' =  '10%', 'margin-right' = '10%'))
